@@ -8,7 +8,7 @@
 
 // HTTPSERVER
 
-const http = require('node:http') // BuiltIn Module
+//const http = require('node:http') // BuiltIn Module
 
 /*...................*/
 
@@ -51,7 +51,7 @@ const app = http.createServer((request, response)=> {
  app.listen(8000, ()=> console.log('Server started: http://127.0.0.1:8000'))
 
 ...................*/
-
+/*
 const app = http.createServer((req, res)=> {
 
     if (req.url == '/api'){
@@ -76,5 +76,5 @@ const app = http.createServer((req, res)=> {
 } ).listen(8000, ()=> console.log('Server started: http://127.0.0.1:8000'))
 
 
-/*...................*/
+...................*/
 
