@@ -10,6 +10,14 @@ const PORT = process.env.PORT || 8000;
 /* ------------------------------------------------------- */
 //? "Router" is special app for URL control in ExpressJS.
 
+app.get('/', (req, res) => {
+    res.send(
+        {
+            message: 'Merhaba dunya'
+        }
+    )
+})
+
 /* ------------------------------------------------------- */
-app.listen(PORT, ( => console.log('Running: http://127.0.0.1:' + PORT)));
+app.listen(PORT, () => console.log('Running: http://127.0.0.1:' + PORT));
 
