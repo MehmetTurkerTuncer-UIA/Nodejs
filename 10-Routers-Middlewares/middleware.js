@@ -14,6 +14,36 @@ const PORT = process.env.PORT || 8000;
 //? Last parameter is for next().
 
 
+/*
+app.get('/', (req, res, next) => {
+    console.log('middleware calisti')
+
+    if(req.query.courseName== 'clarusway'){
+        
+        next()
+    }else{
+        res.send({
+            message: 'course name is fail'
+        })
+    }
+
+
+})
+
+app.get('/', (req, res) =>{
+
+    console.log('route-path calisti')
+
+    res.send({
+        message: 'Hello world'
+    })
+
+})
+
+
+ ------------------------------------------------------- */
+
+
 app.get('/', (req, res, next) => {
     console.log('middleware calisti')
 
@@ -42,5 +72,6 @@ app.get('/', (req, res) =>{
 
 
 /* ------------------------------------------------------- */
+
 
 app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));
