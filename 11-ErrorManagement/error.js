@@ -24,6 +24,8 @@ app.get('/user/:id', function (req, res) {
 */
     if(isNaN(req.params.id)){
 
+        res.errorStatusCode = 400
+
         throw new Error('Id parametresi sayi olmak zorundadir')
     }else{
         res.send('Id dogrudur')
@@ -83,7 +85,9 @@ app.get('/user/:id', function (req, res) {
 
 const errorHandler = (error, req, res, next) => {
 
-        res.status(500).send({
+    const statusCode = res?.errorStatusCode || 500  
+
+        res.status(statusCode).send({
                 error:true,
                 message:error.message
 
