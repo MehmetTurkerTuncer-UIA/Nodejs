@@ -9,18 +9,35 @@ const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 8000;
 
-/* ------------------------------------------------------- */
+/* -------------------------------------------------------*/ 
 
-app.get('/user/:id', function (req, res, next) {
+app.get('/user/:id', function (req, res) {
 
-    // Hata gönder ve sistemi kilitle (kodlar işlemeye devam etmez) // Block Code
-    throw new Error('Hata oluştu.')
+    /* ------------------------------------------------------- 
 
+    throw new Error('Hata olustu')
     res.send({
          id: req.params.id,
          message: 'Hello World'
      })
+         */
 
+    if(isNaN(req.params.id)){
+
+        throw new Error('Id parametresi sayi olmak zorundadir')
+    }else{
+        res.send('Id dogrudur')
+
+    }
+     
+    });
+
+
+/* ------------------------------------------------------- */
+
+
+
+/* ------------------------------------------------------- */
 
 /* ------------------------------------------------------- */
 
