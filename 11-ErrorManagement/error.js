@@ -10,10 +10,10 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8000;
 
 /* -------------------------------------------------------*/ 
-/* ------------------------------------------------------- 
 
 app.get('/user/:id', function (req, res) {
 
+/* ------------------------------------------------------- 
     
     throw new Error('Hata olustu')
     res.send({
@@ -21,7 +21,7 @@ app.get('/user/:id', function (req, res) {
          message: 'Hello World'
      })
          
-
+*/
     if(isNaN(req.params.id)){
 
         throw new Error('Id parametresi sayi olmak zorundadir')
@@ -32,10 +32,10 @@ app.get('/user/:id', function (req, res) {
      
 
     });
-    */
+   
 
 /* ------------------------------------------------------- */
-
+/*
 app.get('/user/:id', function (req, res) {
 
     try{
@@ -57,7 +57,7 @@ app.get('/user/:id', function (req, res) {
     }catch (err) {
         // Hata olmasi halinde catch calisir
         
-        res.status(500).send(
+        res.status(400).send(
             {
                 
                 error: true,
@@ -74,7 +74,25 @@ app.get('/user/:id', function (req, res) {
 
 
 
+ ------------------------------------------------------- */
 /* ------------------------------------------------------- */
+// Errorhandler 4 parametreli olmasi gerekir
+
+
+
+
+const errorHandler = (error, req, res, next) => {
+
+        res.status(500).send({
+                error:true,
+                message:error.message
+
+        })
+
+
+}
+
+app.use(errorHandler)
 
 /* ------------------------------------------------------- */
 
