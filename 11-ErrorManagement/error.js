@@ -86,7 +86,7 @@ const asyncFunction = async () => {
 }
 
 app.get('/async', (req, res, next) => {
-    asyncFunction()
+    await asyncFunction()
         .then()
         .catch((err) => { next(err) })
 })
@@ -95,6 +95,20 @@ app.get('/async', (req, res, next) => {
 
 /* ------------------------------------------------------- */
 // npm i express-async-error 
+
+require('express-async-error')
+
+const asyncFunction = async () => {
+    throw new Error('async-error')
+
+}
+
+app.get('/async', async (req, res, next) => {
+   
+    await asyncFunction()
+        
+})
+
 
 
 /* ------------------------------------------------------- */
