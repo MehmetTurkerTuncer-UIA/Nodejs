@@ -126,10 +126,10 @@ const errorHandler = (error, req, res, next) => {
 
         res.status(statusCode).send({
                 error:true,
-                message:error.message,
-                cause: error.cause,
-                stack: error.stack,
-                
+                message:error.message, // Hata mesaji
+                cause: error.cause,  // Hata neden olustu
+                stack: error.stack,  // Hata orjinal ciktisi
+                 
 
 
         })
