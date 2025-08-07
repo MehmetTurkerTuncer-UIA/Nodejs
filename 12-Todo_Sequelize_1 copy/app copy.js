@@ -25,7 +25,7 @@ require('express-async-errors')
 // SEQUELIZE:
 // $ npm i sequelize sqlite3
 
-const { Sequelize, DataTypes } = require('sequelize')
+const { Sequelize, DataTypes, where } = require('sequelize')
 
 // Connection Object:
 // const sequelize = new Sequelize('sqlite:./db.sqlite3')
@@ -35,6 +35,8 @@ const sequelize = new Sequelize('sqlite:' + (process.env.SQLITE || './db.sqlite3
 // Sequelize Model:
 
 // sequelize.define('tableName', {columns})
+
+
 
 const Todo = sequelize.define('todos', {
     // id isimli bir field olusturmaya gerek yoktur
@@ -90,6 +92,81 @@ sequelize.authenticate()
 /*------------------------------------------------*/
 
 const router = express.Router()
+
+// DELETE DATA
+
+router.delete('/:id', async (req , res) => {
+
+    const data = await Todo.destroy({where: { id: req.params.id}})
+
+/*------------------------------------------------
+        
+    res.status(204).send({
+        error: false,
+        result: data ,
+        message: (data>=1? 'deleted' : 'Can not deleted'),
+      
+    })
+*/
+
+if(data >=1 ){
+    res.status(204).send({
+        error: false,
+        result: data ,
+        message: 'deleted' 
+      
+    })
+}else{
+
+    /*------------------------------------------------
+
+    res.status(200).send({
+        error: false,
+        result: data ,
+        message: 'can not deleted' 
+      
+    })
+        */
+    // Send to ErrorHandler
+    res.errorStatusCode = 404
+    throw new Error('Can not Deleted.')
+
+}
+
+
+})
+
+
+// UPDATE DATA
+router.put('/:id', async (req, res) => {
+    
+    
+    //  const data = await Todo.update({...newData}, {...filter}) 
+    const data = await Todo.update(req.body, {where: { id: req.params.id}})
+    console.log(data)
+
+    res.status(201).send({
+        error: false,
+        result: data ,
+        message: (data[0]>=1? 'Updated' : 'Can not updated'),
+        new: await Todo.findByPk(req.params.id) // Guncel kaydi goster
+    })
+
+})
+
+// TEK BIR DATA ALMA
+
+router.get('/:id', async (req, res) => {
+
+    //const data = await Todo.findOne({where: {id: req.params.id}})
+    const data = await Todo.findByPk(req.params.id)
+
+    res.status(200).send({
+        error: false,
+        result: data
+    })
+
+})
 
 // LIST TODOS:
 
