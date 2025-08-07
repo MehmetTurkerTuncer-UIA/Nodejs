@@ -11,17 +11,17 @@ const PORT = process.env.PORT || 8000;
 
 /* -------------------------------------------------------*/ 
 
-app.get('/user/:id', function (req, res) {
-
 /* ------------------------------------------------------- 
     
+app.get('/user/:id', function (req, res) {
+
     throw new Error('Hata olustu')
     res.send({
          id: req.params.id,
          message: 'Hello World'
      })
          
-*/
+
     if(isNaN(req.params.id)){
 
         res.errorStatusCode = 400
@@ -34,10 +34,10 @@ app.get('/user/:id', function (req, res) {
      
 
     });
-   
+*/   
 
-/* ------------------------------------------------------- */
-/*
+/* ------------------------------------------------------- 
+
 app.get('/user/:id', function (req, res) {
 
     try{
@@ -58,6 +58,9 @@ app.get('/user/:id', function (req, res) {
 
     }catch (err) {
         // Hata olmasi halinde catch calisir
+
+    next(err)
+
         
         res.status(400).send(
             {
@@ -67,25 +70,45 @@ app.get('/user/:id', function (req, res) {
 
             }
         )
-    }
+    
   
+    }});
 
-     
-    });
-
-
+    */
 
 
- ------------------------------------------------------- */
+/* ------------------------------------------------------- 
+// ASYNC ASENKRON FONKSIYONLAR    hata yakalama then catch kullan
+
+const asyncFunction = async () => {
+    throw new Error('async-error')
+
+}
+
+app.get('/async', (req, res, next) => {
+    asyncFunction()
+        .then()
+        .catch((err) => { next(err) })
+})
+*/
+
+
+/* ------------------------------------------------------- */
+// npm i express-async-error 
+
+
+/* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
 // Errorhandler 4 parametreli olmasi gerekir
-
+// Errorhandler sayfanin en sonuna yerlestirilir
 
 
 
 const errorHandler = (error, req, res, next) => {
 
+    console.log('errorhandler calisti')
     const statusCode = res?.errorStatusCode || 500  
+
 
         res.status(statusCode).send({
                 error:true,
