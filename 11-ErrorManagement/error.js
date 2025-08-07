@@ -99,7 +99,7 @@ app.get('/async', (req, res, next) => {
 require('express-async-error')
 
 const asyncFunction = async () => {
-    throw new Error('async-error')
+    throw new Error('async-error', {cause:  'async fonksiyon hatasidir'})
 
 }
 
@@ -126,7 +126,11 @@ const errorHandler = (error, req, res, next) => {
 
         res.status(statusCode).send({
                 error:true,
-                message:error.message
+                message:error.message,
+                cause: error.cause,
+                stack: error.stack,
+                
+
 
         })
 
