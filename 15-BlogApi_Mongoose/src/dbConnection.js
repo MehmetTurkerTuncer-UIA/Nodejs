@@ -15,3 +15,6 @@ const dbConnection = () => {
         .then(() =>  console.log(' DB Connected.') )
         .catch(() =>  console.log(' DB Not Connected.') )
 }
+
+
+module.exports = dbConnection

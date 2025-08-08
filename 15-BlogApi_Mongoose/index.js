@@ -14,8 +14,9 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json())
 
 // DB CONNECTION:
-// const dbConnection = require('./src/dbConnection')
-// dbConnection()
+const dbConnection = require('./src/dbConnection')
+
+dbConnection()
 //require('./src/dbConnection')()
 
 // Catch error from async:
