@@ -89,7 +89,10 @@ module.exports.blogPost = {
 
     list: async (req, res) => {
 
-        const data = await BlogPost.find()
+
+        //const data = await BlogPost.find()
+        //const data = await BlogPost.find({}, {categoryId: true, title: true, content: true})
+        const data = await BlogPost.find({}, {categoryId: 1, title: 1, content: 1}).populate('categoryId')
 
         res.status(200).send({
             error: false,
