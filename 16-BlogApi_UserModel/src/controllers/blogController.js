@@ -8,6 +8,20 @@ const {BlogCategory, BlogPost} = require('../models/blogModel')
 
 module.exports.blogCategory = {
 
+    list: async (req, res) => {
+
+        const data = await BlogCategory.find()
+
+        res.status(200).send({
+            error: false,
+            result: data
+        })
+
+
+    },
+    
+
+
     create: async ( req, res) =>{
 
         // res.send('create method')
