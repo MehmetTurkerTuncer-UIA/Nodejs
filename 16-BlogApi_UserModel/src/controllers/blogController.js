@@ -19,7 +19,27 @@ module.exports.blogCategory = {
 
 
     },
+
+    read: async (req, res) => {
+
+        const data = await BlogCategory.findOne({_id: req.params.categoryId})
+
+        res.status(200).send({
+            error:false,
+            result: data
+        })
+
+    },
     
+    update: async (req, res) => {
+
+        const data = await BlogCategory.updateOne({_id: req.params.categoryId}, req.body)
+
+        res.status(200).send( {
+            error: false,
+            result: data
+        })
+    },
 
 
     create: async ( req, res) =>{
