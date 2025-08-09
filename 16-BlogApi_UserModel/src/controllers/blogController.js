@@ -35,9 +35,11 @@ module.exports.blogCategory = {
 
         const data = await BlogCategory.updateOne({_id: req.params.categoryId}, req.body)
 
-        res.status(200).send( {
+        res.status(202).send( {
             error: false,
-            result: data
+            result: data,
+            new: await BlogCategory.findOne({ _id: req.params.categoryId })
+            
         })
     },
 
