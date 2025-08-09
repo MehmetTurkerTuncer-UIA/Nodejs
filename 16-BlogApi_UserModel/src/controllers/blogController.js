@@ -39,7 +39,7 @@ module.exports.blogCategory = {
             error: false,
             result: data,
             new: await BlogCategory.findOne({ _id: req.params.categoryId })
-            
+
         })
     },
 
@@ -56,7 +56,31 @@ module.exports.blogCategory = {
             result: data
         })
 
-    }
+    },
+
+    delete: async (req, res) => {
+
+        const data = await BlogCategory.deleteOne({_id: req.params.categoryId})
+        console.log(data)
+
+        /*
+        res.status(204).send( {
+            error: false,
+            result: data
+            
+        })
+*/
+        if(data.deleteCount >= 1){
+            res.sendStatus(204)
+            // error: false
+
+        } else {
+
+            res.errorStatusCode = 404
+            throw new Error('Not Found')
+            // error : true
+        }
+    } 
     
 }
 
