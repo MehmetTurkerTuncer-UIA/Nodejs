@@ -96,7 +96,7 @@ module.exports = {
   //  BlogCategory: BlogCategory,
   BlogCategory: mongoose.model("BlogCategory", BlogCategorySchema),
   //  BlogPost: BlogPost
-  BlogPost: mongoose.model("blogPost", BlogPostSchema),
+  BlogPost: mongoose.model("BlogPost", BlogPostSchema),
 };
 
 /*------------------------------------------------------- */
