@@ -15,16 +15,10 @@ const { auth } = require('../controllers/authController');
 
 
 // user
-router.route('/')
-    .get(auth.list)    
-    .post(auth.create)
-    
+router.post('/login', auth.login )
+router.post('/logout', auth.logout )
+ 
 
-router.route('/:userId')
-    .get(auth.read)
-    .put(auth.update)
-    .patch(auth.update)
-    .delete(auth.delete)
 
 
 /*...................................................*/
