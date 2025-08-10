@@ -22,8 +22,18 @@ dbConnection()
 // Catch error from async:
 require('express-async-errors')
 
-/* ------------------------------------------------------- 
-*/
+
+/* ------------------------------------------------------- */
+/* ------------------------------------------------------- */
+// SessionCookies:
+// http://expressjs.com/en/resources/middleware/cookie-session.html
+// https://www.npmjs.com/package/cookie-session
+//* $ npm i cookie-session
+
+const session = require('cookie-session') // Session Middleware
+
+
+/* ------------------------------------------------------- */
 app.all('/', (req, res) => {
     res.send('WELCOME TO BLOG API')
 })
