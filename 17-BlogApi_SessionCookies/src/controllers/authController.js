@@ -3,69 +3,67 @@
     EXPRESSJS - BLOG Project with Mongoose
 ------------------------------------------------------- */
 //const User = require('../models/userModel')   // direct gonderildiyse bu sekilde object icinde gonderildiye asagidaki sekilde reqired yapilir
-const {User} = require('../models/userModel')
+const { User } = require("../models/userModel");
 
-const passwordEncrypt = require('../helpers/passwordEncrypt')
+const passwordEncrypt = require("../helpers/passwordEncrypt");
 
 /*...................................*/
 // Auth Controller:
 
 module.exports.auth = {
+  login: async (req, res) => {
+    const { email, password } = req.body;
 
-    login: async (req, res) => {
+    if (email && password) {
+      // const user = await User.findOne({email: email})
+      const user = await User.findOne({ email });
 
-        const {email, password} = req.body
+      if (user) {
+        //USER TAMAMDIR
 
-        if( email && password) {
+        if (user.password == passwordEncrypt(password)) {
+          // password: tamamdir
+          /* SESSION */
 
-            // const user = await User.findOne({email: email})
-            const user = await User.findOne({email})
-            
-            if(user){
-                //USER TAMAMDIR 
+          /*
+                    req.session ={
+                        email: user.email,
+                        password: user.password
+                    } 
+                    */
+          req.session._id = user._id;
+          req.session.password = user.password;
 
-                if(user.password == passwordEncrypt(password)){
-
-                    // password: tamamdir
-                    res.send({
-                        message: 'Login is successfull'
-                    })
-
-                }else{
-                    res.errorStatusCode = 401
-                    throw new Error('Password or email are not true')
-
-                }
-
-
-            }else{
-                res.errorStatusCode = 401
-                throw new Error('This user not found')
-
-            }
-            
-            
+          res.status(200).send({
+            error: false,
+            message: "Login is successful",
+            user,
+          });
         } else {
-            res.errorStatusCode = 401
-            throw new Error('Email and password are required')
+          res.errorStatusCode = 401;
+          throw new Error("Password or email are not true");
         }
-
-
-    },
-
-    logout: async (req, res ) => {
-
-
-
+      } else {
+        res.errorStatusCode = 401;
+        throw new Error("This user not found");
+      }
+    } else {
+      res.errorStatusCode = 401;
+      throw new Error("Email and password are required");
     }
+  },
 
+  logout: async (req, res) => {
+    // Session / Cookie datasini silmek icin bu islem yapilir
 
-}
+    req.session = null;
 
-
-
-
-
+    res.status(200).send({
+      error: false,
+      message: "Logout: OK",
+    });
+  },
+};
 
 /*...................................*/
 /*...................................*/

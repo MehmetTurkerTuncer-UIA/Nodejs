@@ -16,7 +16,7 @@ const { auth } = require('../controllers/authController');
 
 // user
 router.post('/login', auth.login )
-router.post('/logout', auth.logout )
+router.all('/logout', auth.logout )
  
 
 
