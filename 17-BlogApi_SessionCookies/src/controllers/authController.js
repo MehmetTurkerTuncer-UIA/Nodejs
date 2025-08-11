@@ -34,6 +34,20 @@ module.exports.auth = {
           req.session._id = user._id;
           req.session.password = user.password;
 
+          
+          /*........................................*/
+         // COOKIE
+
+         if (req.body?.remindMe == true){
+            req.session.remindMe = true
+
+            // Set MaxAge: // 3 days
+            req.sessionOptions.maxAge = 1000 * 60 *60 *24 * 3 
+
+
+         }
+
+          
           res.status(200).send({
             error: false,
             message: "Login is successful",
