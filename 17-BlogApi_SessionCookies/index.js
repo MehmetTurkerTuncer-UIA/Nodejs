@@ -11,17 +11,16 @@ const PORT = process.env.PORT || 8000;
 
 /* ------------------------------------------------------- */
 // Accept JSON:
-app.use(express.json())
+app.use(express.json());
 
 // DB CONNECTION:
-const dbConnection = require('./src/dbConnection')
+const dbConnection = require("./src/dbConnection");
 
-dbConnection()
+dbConnection();
 //require('./src/dbConnection')()
 
 // Catch error from async:
-require('express-async-errors')
-
+require("express-async-errors");
 
 /* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
@@ -30,36 +29,44 @@ require('express-async-errors')
 // https://www.npmjs.com/package/cookie-session
 //* $ npm i cookie-session
 
-const session = require('cookie-session') // Session Middleware
+const session = require("cookie-session"); // Session Middleware
 
-app.use(session({
-    secret: process.env.SECRET_KEY // Cookie datasi ocon rastgele bir anahtar belirtmek gerekir
+app.use(
+  session({
+    secret: process.env.SECRET_KEY, // Cookie datasi ocon rastgele bir anahtar belirtmek gerekir
     //maxAge:    // 1000 * 60 * 60 *24 * 3  3 gün  // milliSeconds
+  })
+);
+
+/* ------------------------------------------------------- */
+// Middleware for check user data from session:
+
+app.use(require('./src/middlewares/userControl'))
 
 
-
-}))
 
 
 /* ------------------------------------------------------- */
-app.all('/', (req, res) => {
-    res.send({
-        session: req.session,
-        message: 'WELCOME TO BLOG API'
-    })
-})
+/* ------------------------------------------------------- */
+app.all("/", (req, res) => {
+  res.send({
+    session: req.session,
+    user: req.session,
+    message: "WELCOME TO BLOG API",
+  });
+});
 
 /* ------------------------------------------------------- */
 // Routes:
 
-app.use('/auth', require('./src/routes/authRouter'))
-app.use('/user', require('./src/routes/userRouter'))
-app.use('/blog', require('./src/routes/blogRouter'))
+app.use("/auth", require("./src/routes/authRouter"));
+app.use("/user", require("./src/routes/userRouter"));
+app.use("/blog", require("./src/routes/blogRouter"));
 
 /* ------------------------------------------------------- */
 // Catch Errors:
-app.use(require('./src/errorHandler'))
+app.use(require("./src/middlewares/errorHandler"));
 
 /* ------------------------------------------------------- */
 
-app.listen(PORT, () => console.log('Running: http://127.0.0.1:' + PORT))
+app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));
