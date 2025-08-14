@@ -9,7 +9,7 @@ const { User } = require('../models/userModel')
 // Authentication Middleware
 // Session icindeki user id ve passwordu kontrol eden middleware.
 
-module.exports = async (req, resizeBy, next) => {
+module.exports = async (req, res, next) => {
 
     req.user = null
 

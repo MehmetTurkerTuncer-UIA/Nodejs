@@ -129,6 +129,10 @@ module.exports.blogPost = {
     create: async ( req, res) =>{
 
         // res.send('create method')
+        req.body.userId = req.user?.id
+
+        req.body.content += ` Author: ${req.user?.firstname} ${req.user?.lastName}`
+    
 
         const data = await BlogPost.create(req.body)
         //console.log(data)
