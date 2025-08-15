@@ -11,7 +11,7 @@ const {BlogCategory, BlogPost} = require ('./src/models/blogModel')
 
 module.exports = async () => {
 
-    
+
     // Deleted ALL RECORDS
     await User.deleteMany().then(() => console.log('  -- User Dleted All'))
     await BlogCategory.deleteMany().then(() => console.log('-- BlogCategory deleted All'))
@@ -38,13 +38,15 @@ module.exports = async () => {
 
         await BlogPost.create({
             userId: user._id,
-            blogCategoryId: blogCategory._id,
+            categoryId: blogCategory._id,
             title: `tets ${key} title`,
             content: `test ${key} content`,
             published: Boolean(key%2)
         })
 
     }
+
+    console.log('islem Bitti')
 }
 
 
