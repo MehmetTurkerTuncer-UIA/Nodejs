@@ -69,7 +69,7 @@ const BlogPostSchema = new mongoose.Schema(
         required: true
     },
 
-    categoryId: {
+    blogCategoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "BlogCategory",
       required: true,
@@ -87,6 +87,13 @@ const BlogPostSchema = new mongoose.Schema(
       trim: true,
       required: true,
     },
+
+    published: {
+        type: Boolean,
+        default: true
+
+    }
+
   },
   {
     collection: "blogPosts",
