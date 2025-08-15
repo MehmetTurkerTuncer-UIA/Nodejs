@@ -46,13 +46,15 @@ module.exports = async (req, res, next) => {
   //const data = await BlogPost.find({}, {categoryId: true, title: true, content: true})
   //const data = await BlogPost.find({}, {categoryId: 1, title: 1, content: 1}).populate('categoryId')
   //const data = await BlogPost.find().populate('categoryId')
-/*
+  /*
   const data = await BlogPost.find({ ...filter, ...search })
     .sort(sort)
     .skip(skip)
     .limit(limit)
     .populate("categoryId");
 */
+
+  // GetModeLList
   res.getModelList = async function (Model, populate = null) {
     return await Model.find({ ...filter, ...search })
       .sort(sort)
@@ -61,6 +63,30 @@ module.exports = async (req, res, next) => {
       .populate(populate);
   };
 
+  res.getModelListDetails = async function (Model) {
+    const data = await Model.find({ ...filter, ...search });
 
-  next()
+    let details = {
+      filter,
+      search,
+      sort,
+      skip,
+      limit,
+      page,
+      pages: {
+        previous: page > 1 ? page - 1 : false,
+        current: page,
+        next: page + 1,
+        total: Math.ceil(data.length / limit),
+      },
+      totalRecords: data.length,
+    };
+
+    if (details.pages.next > details.pages.total) details.pages.next = false;
+    if (details.totalRecords <= limit) details.pages = false;
+
+    return details;
+  };
+
+  next();
 };
