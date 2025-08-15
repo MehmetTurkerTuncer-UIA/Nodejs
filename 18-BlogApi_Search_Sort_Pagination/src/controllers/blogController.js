@@ -75,7 +75,9 @@ module.exports.blogPost = {
   list: async (req, res) => {
     //console.log(req.query);
 
-    
+    const data = await res.getModelList(BlogPost, "categoryId")
+
+
     res.status(200).send({
       error: false,
       result: data,

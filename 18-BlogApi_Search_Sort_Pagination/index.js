@@ -43,7 +43,9 @@ app.use(
 
 app.use(require('./src/middlewares/userControl'))
 
+// Middleware for query (Search, Sort, Page)
 
+app.use(require('./src/middlewares/queryHandler'))
 
 
 /* ------------------------------------------------------- */
