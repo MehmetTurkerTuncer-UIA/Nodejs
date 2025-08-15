@@ -97,23 +97,32 @@ module.exports.blogPost = {
     const sort = req.query?.sort || {};
     //console.log(sort)
 
-    
     // PAGINATION
 
     // URL?page=3&limit=15
 
-    let limit = Number(req.query?.limit || 10);
+    let limit = Number(req.query?.limit);
+    limit = limit > 0 ? limit : Number(process.env?.PAGE_SIZE || 20);
+    console.log(limit);
 
-    console.log(limit)
+    // PAGE
+    let page = Number(req.query?.page);
+    page = page > 0 ? page : 1;
 
-
-
-    const data = await BlogPost.find({ ...filter, ...search }).sort(sort);
+    // SKIP
+    let skip = Number(req.query?.skip);
+    skip = skip > 0 ? skip : (page - 1) * limit;
 
     //const data = await BlogPost.find()
     //const data = await BlogPost.find({}, {categoryId: true, title: true, content: true})
     //const data = await BlogPost.find({}, {categoryId: 1, title: 1, content: 1}).populate('categoryId')
     //const data = await BlogPost.find().populate('categoryId')
+
+    const data = await BlogPost.find({ ...filter, ...search })
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
+      .populate('categoryId');
 
     res.status(200).send({
       error: false,
